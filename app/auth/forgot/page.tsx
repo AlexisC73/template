@@ -24,7 +24,7 @@ export default function Forgot () {
         </div>
       </form>
       <p className='mt-12'>
-        J'ai retrouvé mon mot de passe !{' '}
+        J&apos;ai retrouvé mon mot de passe !{' '}
         <Link href={'./signin'} className='text-[#085EC4] underline'>
           Me connecter
         </Link>

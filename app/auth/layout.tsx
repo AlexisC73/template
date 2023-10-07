@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -25,9 +26,12 @@ export default function AuthLayout ({
             {children}
           </div>
           <div className='bg-slate-600 w-full hidden lg:block'>
-            <img
-              alt='test'
-              className='object-cover w-full h-full'
+            <Image
+              alt='image de fond'
+              className='w-full h-full object-cover'
+              sizes='100%'
+              width={1974}
+              height={1316}
               src={
                 'https://images.unsplash.com/photo-1580537659466-0a9bfa916a54?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80'
               }
