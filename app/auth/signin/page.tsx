@@ -15,9 +15,11 @@ export default function SignIn () {
           <CustomInput label='Addresse email' name='email' />
           <CustomInput label='Mot de passe' name='password' type='password' />
         </div>
-        <Link href='/auth/forgot'>Mot de passe oublié ?</Link>
+        <Link href='/auth/forgot' className='flex justify-end mt-2 underline'>
+          Mot de passe oublié ?
+        </Link>
         <br />
-        <div className='mt-6'>
+        <div>
           <CustomButton label='Me connecter' type='submit' />
         </div>
       </form>
