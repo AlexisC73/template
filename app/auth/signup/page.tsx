@@ -22,7 +22,7 @@ export default function SignUp () {
           />
         </div>
         <div className='mt-6'>
-          <CustomButton label='Se connecter' type='submit' />
+          <CustomButton label="M'inscrire" type='submit' />
         </div>
       </form>
 

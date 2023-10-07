@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Auth',
@@ -15,9 +16,12 @@ export default function AuthLayout ({
       <body className=''>
         <main className='flex sm:absolute inset-0 sm:min-h-[700px]'>
           <div className='bg-white w-full flex flex-col justify-center'>
-            <div className='sm:absolute py-6 sm:py-0 top-6 w-full lg:w-1/2 text-center font-bold text-[20px]'>
+            <Link
+              href='/'
+              className='sm:absolute py-6 sm:py-0 top-6 w-full lg:w-1/2 text-center font-bold text-[20px]'
+            >
               TheSellerPlace
-            </div>
+            </Link>
             {children}
           </div>
           <div className='bg-slate-600 w-full hidden lg:block'>

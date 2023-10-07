@@ -18,7 +18,7 @@ export default function SignIn () {
         <Link href='/auth/forgot'>Mot de passe oublié ?</Link>
         <br />
         <div className='mt-6'>
-          <CustomButton label='Se connecter' type='submit' />
+          <CustomButton label='Me connecter' type='submit' />
         </div>
       </form>
 
