@@ -29,7 +29,7 @@ export default function SignUp () {
       <p className='mt-12'>
         Vous avez déjà un compte ?{' '}
         <Link href={'./signin'} className='text-[#085EC4] underline'>
-          Connectez-vous ici
+          Me connecter
         </Link>
       </p>
     </section>

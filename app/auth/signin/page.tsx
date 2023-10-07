@@ -27,7 +27,7 @@ export default function SignIn () {
       <p className='mt-12'>
         Vous n'avez pas encore de compte ?{' '}
         <Link href={'./signup'} className='text-[#085EC4] underline'>
-          Créez en un ici
+          Me créer un compte
         </Link>
       </p>
     </section>
