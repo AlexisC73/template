@@ -1,4 +1,5 @@
-import { CustomButton, CustomInput } from '@/presentation/@shared/form'
+import { Button } from '@/presentation/@shared/button'
+import { Input } from '@/presentation/@shared/input'
 import Link from 'next/link'
 
 export default function Forgot () {
@@ -16,11 +17,11 @@ export default function Forgot () {
 
       <form className='px-8 w-full sm:w-[600px] lg:w-[500px] mt-8'>
         <div id='form-element' className='flex flex-col gap-6'>
-          <CustomInput label='Addresse email' name='email' />
+          <Input label='Addresse email' name='email' />
         </div>
         <br />
         <div>
-          <CustomButton label='Récuperer mon mot de passe' type='submit' />
+          <Button label='Récuperer mon mot de passe' type='submit' />
         </div>
       </form>
       <p className='mt-12'>

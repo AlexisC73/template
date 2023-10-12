@@ -1,4 +1,5 @@
-import { CustomButton, CustomInput } from '@/presentation/@shared/form'
+import { Button } from '@/presentation/@shared/button'
+import { Input } from '@/presentation/@shared/input'
 import Link from 'next/link'
 
 export default function SignIn () {
@@ -12,15 +13,15 @@ export default function SignIn () {
       </div>
       <form className='px-8 w-full sm:w-[600px] lg:w-[500px] mt-8'>
         <div id='form-element' className='flex flex-col gap-6'>
-          <CustomInput label='Addresse email' name='email' />
-          <CustomInput label='Mot de passe' name='password' type='password' />
+          <Input label='Addresse email' name='email' />
+          <Input label='Mot de passe' name='password' type='password' />
         </div>
         <Link href='/auth/forgot' className='flex justify-end mt-2 underline'>
           Mot de passe oublié ?
         </Link>
         <br />
         <div>
-          <CustomButton label='Me connecter' type='submit' />
+          <Button label='Me connecter' type='submit' />
         </div>
       </form>
 
