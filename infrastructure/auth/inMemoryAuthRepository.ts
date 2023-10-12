@@ -14,9 +14,9 @@ export class InMemoryAuthRepository implements AuthRepository {
   }
 
   private _save (auth: { id: string; email: string; password: string }) {
-    const foundAuth = this._findById(auth.id) || this.findByEmail(auth.email)
+    const foundAuth = this.findByEmail(auth.email) || this._findById(auth.id)
     if (foundAuth) {
-      throw new Error('Id or email already exists')
+      throw new Error()
     }
     this.auths.push(auth)
   }

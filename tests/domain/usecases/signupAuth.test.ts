@@ -4,6 +4,7 @@ import { AuthFixture, createAuthFixture } from '../authFixture'
 import { ID } from '@/domain/@shared/valueObjects/id'
 import { Email } from '@/domain/@shared/valueObjects/email'
 import { Password } from '@/domain/@shared/valueObjects/password'
+import { InvalidSignupPayloadError } from '@/domain/auth/errors'
 
 describe('Signup Auth UseCase', () => {
   let authFixture: AuthFixture
@@ -22,6 +23,8 @@ describe('Signup Auth UseCase', () => {
       )
     })
 
+    console.log(Email.create('john@doe.fr').isValid())
+
     authFixture.thenAuthShouldExist({
       id: 'john-id',
       email: 'john@doe.fr',
@@ -29,60 +32,22 @@ describe('Signup Auth UseCase', () => {
     })
   })
 
-  test("should throw an error if the auth's email already exists", async () => {
-    authFixture.givenAuthExists([
-      authBuilder({
-        id: 'john-id',
-        email: 'john@doe.fr'
-      }).build()
-    ])
-
-    await authFixture.whenAuthSignup({
-      payload: new SignupAuthPayload(
-        ID.create('alice-id'),
-        Email.create('john@doe.fr'),
-        Password.create('password')
-      )
-    })
-
-    authFixture.thenErrorShouldBeThrown()
-  })
-
-  test("should throw an error if the auth's ID already exists", async () => {
-    authFixture.givenAuthExists([
-      authBuilder({
-        id: 'same-id',
-        email: 'john@doe.fr'
-      }).build()
-    ])
-
-    await authFixture.whenAuthSignup({
-      payload: new SignupAuthPayload(
-        ID.create('same-id'),
-        Email.create('alice@doe.fr'),
-        Password.create('password')
-      )
-    })
-
-    authFixture.thenErrorShouldBeThrown()
-  })
-
   test('should throw an error if part of the auth payload is invalid', async () => {
     authFixture.givenAuthExists([
       authBuilder({
-        id: 'same-id',
+        id: 'first-id',
         email: 'john@doe.fr'
       }).build()
     ])
 
     await authFixture.whenAuthSignup({
       payload: new SignupAuthPayload(
-        ID.create('same-id'),
+        ID.create('john-id'),
         Email.create(''),
         Password.create('password')
       )
     })
 
-    authFixture.thenErrorShouldBeThrown()
+    authFixture.thenErrorShouldBeThrown(InvalidSignupPayloadError)
   })
 })

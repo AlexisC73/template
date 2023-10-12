@@ -2,8 +2,8 @@ import {
   SignupAuthUseCase,
   SignupAuthParams
 } from '@/domain/auth/usecases/signup'
-import { InMemoryAuthRepository } from '@/infrastructure/auth/InMemoryAuthRepository'
 import { Auth } from '@/domain/auth/entities'
+import { InMemoryAuthRepository } from '@/infrastructure/auth/inMemoryAuthRepository'
 
 export const createAuthFixture = () => {
   const authRepository = new InMemoryAuthRepository()
@@ -34,9 +34,11 @@ export const createAuthFixture = () => {
         password: expectedAuth.password
       })
     },
-    thenErrorShouldBeThrown () {
-      expect(thrownError).not.toBeUndefined()
-    }
+    thenErrorShouldBeThrown (expectedError: new () => Error) {
+      console.log(expectedError)
+      expect(thrownError).toBeInstanceOf(expectedError)
+    },
+    authRepository: () => authRepository
   }
 }
 
