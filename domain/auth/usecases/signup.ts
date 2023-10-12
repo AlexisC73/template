@@ -3,11 +3,19 @@ import { AuthRepository } from '@/application/auth/repository/authRepository'
 export class SignupAuthUseCase {
   constructor (private readonly authRepository: AuthRepository) {}
 
-  async execute (authPayload: { id: string; email: string; password: string }) {
+  async execute ({ payload }: SignupAuthParams) {
     return this.authRepository.create(
-      authPayload.id,
-      authPayload.email,
-      authPayload.password
+      payload.id,
+      payload.email,
+      payload.password
     )
+  }
+}
+
+export type SignupAuthParams = {
+  payload: {
+    id: string
+    email: string
+    password: string
   }
 }
