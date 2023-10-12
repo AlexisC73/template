@@ -1,5 +1,9 @@
+import { SignupAuthPayload } from '@/domain/auth/entities/payload/SignupAuthPayload'
 import { authBuilder } from '../authBuilder'
 import { AuthFixture, createAuthFixture } from '../authFixture'
+import { ID } from '@/domain/@shared/valueObjects/id'
+import { Email } from '@/domain/@shared/valueObjects/email'
+import { Password } from '@/domain/@shared/valueObjects/password'
 
 describe('Signup Auth UseCase', () => {
   let authFixture: AuthFixture
@@ -11,17 +15,17 @@ describe('Signup Auth UseCase', () => {
     authFixture.givenAuthExists([])
 
     await authFixture.whenAuthSignup({
-      payload: {
-        id: '123',
-        email: 'john@doe.fr',
-        password: '123456'
-      }
+      payload: new SignupAuthPayload(
+        ID.create('john-id'),
+        Email.create('john@doe.fr'),
+        Password.create('password')
+      )
     })
 
     authFixture.thenAuthShouldExist({
-      id: '123',
+      id: 'john-id',
       email: 'john@doe.fr',
-      password: '123456'
+      password: 'password'
     })
   })
 
@@ -34,11 +38,49 @@ describe('Signup Auth UseCase', () => {
     ])
 
     await authFixture.whenAuthSignup({
-      payload: {
-        id: 'other-id',
-        email: 'john@doe.fr',
-        password: '123456'
-      }
+      payload: new SignupAuthPayload(
+        ID.create('alice-id'),
+        Email.create('john@doe.fr'),
+        Password.create('password')
+      )
+    })
+
+    authFixture.thenErrorShouldBeThrown()
+  })
+
+  test("should throw an error if the auth's ID already exists", async () => {
+    authFixture.givenAuthExists([
+      authBuilder({
+        id: 'same-id',
+        email: 'john@doe.fr'
+      }).build()
+    ])
+
+    await authFixture.whenAuthSignup({
+      payload: new SignupAuthPayload(
+        ID.create('same-id'),
+        Email.create('alice@doe.fr'),
+        Password.create('password')
+      )
+    })
+
+    authFixture.thenErrorShouldBeThrown()
+  })
+
+  test('should throw an error if part of the auth payload is invalid', async () => {
+    authFixture.givenAuthExists([
+      authBuilder({
+        id: 'same-id',
+        email: 'john@doe.fr'
+      }).build()
+    ])
+
+    await authFixture.whenAuthSignup({
+      payload: new SignupAuthPayload(
+        ID.create('same-id'),
+        Email.create(''),
+        Password.create('password')
+      )
     })
 
     authFixture.thenErrorShouldBeThrown()
