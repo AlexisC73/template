@@ -1,5 +1,9 @@
-import { AuthRepository } from '@/application/auth/repository/authRepository'
+import {
+  AuthInfo,
+  AuthRepository
+} from '@/application/auth/repository/authRepository'
 import { Auth } from '@/domain/auth/entities'
+import { AuthError } from '@/domain/auth/errors'
 
 export class InMemoryAuthRepository implements AuthRepository {
   auths: Auth[] = []
@@ -7,6 +11,17 @@ export class InMemoryAuthRepository implements AuthRepository {
   create (id: string, email: string, password: string): Promise<void> {
     this._save({ id, email, password })
     return Promise.resolve()
+  }
+
+  signin (email: string, password: string): Promise<AuthInfo> {
+    const auth = this.findByEmail(email)
+    if (!auth) {
+      throw new AuthError("Auth doesn't exist.")
+    }
+    if (auth.password !== password) {
+      throw new AuthError("Auth password doesn't match.")
+    }
+    return Promise.resolve({ id: auth.id })
   }
 
   findByEmail (email: string) {

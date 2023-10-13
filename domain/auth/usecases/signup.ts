@@ -1,13 +1,13 @@
 import { AuthRepository } from '@/application/auth/repository/authRepository'
 import { SignupAuthPayload } from '../entities/payload/SignupAuthPayload'
-import { InvalidSignupPayloadError } from '../errors'
+import { InvalidPayloadError } from '../errors'
 
 export class SignupAuthUseCase {
   constructor (private readonly authRepository: AuthRepository) {}
 
   async execute ({ payload }: SignupAuthParams) {
     if (!payload.isValid()) {
-      throw new InvalidSignupPayloadError()
+      throw new InvalidPayloadError()
     }
 
     return this.authRepository.create(

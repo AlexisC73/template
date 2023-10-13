@@ -1,10 +1,10 @@
 import { SignupAuthPayload } from '@/domain/auth/entities/payload/SignupAuthPayload'
-import { authBuilder } from '../authBuilder'
-import { AuthFixture, createAuthFixture } from '../authFixture'
+import { authBuilder } from '../../authBuilder'
+import { AuthFixture, createAuthFixture } from '../../authFixture'
 import { ID } from '@/domain/@shared/valueObjects/id'
 import { Email } from '@/domain/@shared/valueObjects/email'
 import { Password } from '@/domain/@shared/valueObjects/password'
-import { InvalidSignupPayloadError } from '@/domain/auth/errors'
+import { InvalidPayloadError } from '@/domain/auth/errors'
 
 describe('Signup Auth UseCase', () => {
   let authFixture: AuthFixture
@@ -12,7 +12,7 @@ describe('Signup Auth UseCase', () => {
   beforeEach(() => {
     authFixture = createAuthFixture()
   })
-  test('should add a auth', async () => {
+  test('should add auth', async () => {
     authFixture.givenAuthExists([])
 
     await authFixture.whenAuthSignup({
@@ -22,8 +22,6 @@ describe('Signup Auth UseCase', () => {
         Password.create('password')
       )
     })
-
-    console.log(Email.create('john@doe.fr').isValid())
 
     authFixture.thenAuthShouldExist({
       id: 'john-id',
@@ -48,6 +46,8 @@ describe('Signup Auth UseCase', () => {
       )
     })
 
-    authFixture.thenErrorShouldBeThrown(InvalidSignupPayloadError)
+    authFixture.thenErrorShouldBeThrown(
+      new InvalidPayloadError("Signup payload isn't valid.")
+    )
   })
 })

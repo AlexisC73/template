@@ -4,10 +4,18 @@ import {
 } from '@/domain/auth/usecases/signup'
 import { Auth } from '@/domain/auth/entities'
 import { InMemoryAuthRepository } from '@/infrastructure/auth/inMemoryAuthRepository'
+import {
+  SigninAuthUseCase,
+  SigninAuthParams
+} from '@/domain/auth/usecases/signin'
+import { AuthInfo } from '@/application/auth/repository/authRepository'
 
 export const createAuthFixture = () => {
   const authRepository = new InMemoryAuthRepository()
   const signupAuthUseCase = new SignupAuthUseCase(authRepository)
+  const signinAuthUseCase = new SigninAuthUseCase(authRepository)
+
+  let authInfo: AuthInfo
 
   let thrownError: Error | undefined
 
@@ -18,6 +26,13 @@ export const createAuthFixture = () => {
     async whenAuthSignup (authParams: SignupAuthParams) {
       try {
         await signupAuthUseCase.execute(authParams)
+      } catch (err: any) {
+        thrownError = err
+      }
+    },
+    async whenAuthSignin (authParams: SigninAuthParams) {
+      try {
+        authInfo = await signinAuthUseCase.execute(authParams)
       } catch (err: any) {
         thrownError = err
       }
@@ -34,11 +49,12 @@ export const createAuthFixture = () => {
         password: expectedAuth.password
       })
     },
-    thenErrorShouldBeThrown (expectedError: new () => Error) {
-      console.log(expectedError)
-      expect(thrownError).toBeInstanceOf(expectedError)
+    thenErrorShouldBeThrown (expectedError: Error) {
+      expect(thrownError?.name).toBe(expectedError.name)
     },
-    authRepository: () => authRepository
+    thenShouldBeAuthenticated (expectedAuthInfo: AuthInfo) {
+      expect(authInfo).toEqual(expectedAuthInfo)
+    }
   }
 }
 
