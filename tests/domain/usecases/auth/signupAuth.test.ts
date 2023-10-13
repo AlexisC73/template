@@ -46,8 +46,6 @@ describe('Signup Auth UseCase', () => {
       )
     })
 
-    authFixture.thenErrorShouldBeThrown(
-      new InvalidPayloadError("Signup payload isn't valid.")
-    )
+    authFixture.thenErrorShouldBeThrown(InvalidPayloadError)
   })
 })

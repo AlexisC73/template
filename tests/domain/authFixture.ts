@@ -49,8 +49,8 @@ export const createAuthFixture = () => {
         password: expectedAuth.password
       })
     },
-    thenErrorShouldBeThrown (expectedError: Error) {
-      expect(thrownError?.name).toBe(expectedError.name)
+    thenErrorShouldBeThrown (expectedError: new () => Error) {
+      expect(thrownError).toBeInstanceOf(expectedError)
     },
     thenShouldBeAuthenticated (expectedAuthInfo: AuthInfo) {
       expect(authInfo).toEqual(expectedAuthInfo)

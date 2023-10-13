@@ -1,6 +1,4 @@
-import { SignupAuthPayload } from '@/domain/auth/entities/payload/SignupAuthPayload'
 import { AuthFixture, createAuthFixture } from '../../authFixture'
-import { ID } from '@/domain/@shared/valueObjects/id'
 import { Email } from '@/domain/@shared/valueObjects/email'
 import { Password } from '@/domain/@shared/valueObjects/password'
 import { SigninAuthPayload } from '@/domain/auth/entities/payload/SigninAuthPayload'
@@ -49,9 +47,7 @@ describe('Signup Auth UseCase', () => {
       )
     })
 
-    authFixture.thenErrorShouldBeThrown(
-      new InvalidPayloadError("Signin payload isn't valid.")
-    )
+    authFixture.thenErrorShouldBeThrown(InvalidPayloadError)
   })
 
   test('should return auth error if signin fail due to wrong password', async () => {
@@ -70,9 +66,7 @@ describe('Signup Auth UseCase', () => {
       )
     })
 
-    authFixture.thenErrorShouldBeThrown(
-      new AuthError("Auth password doesn't match.")
-    )
+    authFixture.thenErrorShouldBeThrown(AuthError)
   })
 
   test('should return auth error if signin email not exist', async () => {
@@ -91,6 +85,6 @@ describe('Signup Auth UseCase', () => {
       )
     })
 
-    authFixture.thenErrorShouldBeThrown(new AuthError("Auth doesn't exist."))
+    authFixture.thenErrorShouldBeThrown(AuthError)
   })
 })
